@@ -17,15 +17,16 @@
 #define	UX400VENDOR	0x0403
 #define	UX400PRODUCT	0x6010
 #define	UX400DES	"USB <-> Serial Converter"
-
+#define UX400_LOCAL_SN          "USBLOCALBUS01"
+#define UX400_SEM_CPLD  "UX400_SEM_CPLD"
 
 #define	UX400_RS232_SN		"USB2RS232"
-
 #define	UX400_RS232_A		1
 #define	UX400_RS232_B		2
-
 #define	GPS_BAUDRATE		9600
 
+#define CONT_REG1 0x00
+#define GPS_ON 6
 
 struct ftdi_context ux400_gps_ftdic;
 
@@ -113,7 +114,7 @@ static int ux400_gps_sys_init()
 		return EXIT_FAILURE;
 	}
 
-	ftdi_set_interface(&ux400_gps_ftdic, UX400_RS232_A);
+	ftdi_set_interface(&ux400_gps_ftdic, UX400_RS232_B);
 
 	if((ret = ftdi_usb_open_desc(&ux400_gps_ftdic, UX400VENDOR, UX400PRODUCT, UX400DES, UX400_RS232_SN)) < 0)
 	{
@@ -121,13 +122,25 @@ static int ux400_gps_sys_init()
 	    return EXIT_FAILURE;
 	}
 
-	// Set baudrate
-	ret = ftdi_set_baudrate(&ux400_gps_ftdic, GPS_BAUDRATE);
-	if (ret < 0)
-	{
-		fprintf(stderr, "unable to set baudrate: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
-		return EXIT_FAILURE;
-	}
+        if((ret = ftdi_usb_reset(&ux400_gps_ftdic)) < 0)
+        {
+            fprintf(stderr, "ftdi_usb_reset failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_set_baudrate(&ux400_gps_ftdic, 9600)) < 0)
+        {
+            fprintf(stderr, "ftdi_set_baudrate failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_set_bitmode(&ux400_gps_ftdic, 0x00, BITMODE_RESET)) < 0)
+        {
+            fprintf(stderr, "ftdi_set_bitmode failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        usleep(10000);
 
 	return 0;
 }
@@ -155,12 +168,90 @@ static int ux400_gps_write_data(unsigned char * buf, int size)
 
 	return ret;
 }
+int sys_init()
+{
+        int ret, i;
+        struct ftdi_device_list *devlist, *curdev;
+        char manufacturer[128], description[128], serialno[128];
 
+        if (ftdi_init(&ux400_gps_ftdic) < 0)
+        {
+                fprintf(stderr, "ftdi_init failed\n");
+                return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_usb_open_desc(&ux400_gps_ftdic, UX400VENDOR, UX400PRODUCT, UX400DES, UX400_LOCAL_SN)) < 0)
+        {
+            fprintf(stderr, "ftdi_usb_open_desc failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_usb_reset(&ux400_gps_ftdic)) < 0)
+        {
+            fprintf(stderr, "ftdi_usb_reset failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_set_baudrate(&ux400_gps_ftdic, 9600)) < 0)
+        {
+            fprintf(stderr, "ftdi_set_baudrate failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        if((ret = ftdi_set_bitmode(&ux400_gps_ftdic, 0x00, BITMODE_RESET)) < 0)
+        {
+            fprintf(stderr, "ftdi_set_bitmode failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        usleep(10000);
+
+        if((ret = ftdi_set_bitmode(&ux400_gps_ftdic, 0x00, BITMODE_MCU)) < 0)
+        {
+            fprintf(stderr, "ftdi_set_bitmode failed: %d (%s)\n", ret, ftdi_get_error_string(&ux400_gps_ftdic));
+            return EXIT_FAILURE;
+        }
+
+        return 0;
+}
+int gps_on()
+{
+	unsigned char data;
+	unsigned int ret;
+
+	ret = Read_bus(&ux400_gps_ftdic, 0x00, CONT_REG1, &data, 1);
+	if(ret < 0) {
+		printf("read bus failed\n");
+		return EXIT_FAILURE;
+	}
+
+	data &= ~(0x01<<GPS_ON);
+	ret = Write_bus(&ux400_gps_ftdic, 0x00, CONT_REG1, &data, 1);
+	if(ret < 0) {
+		printf("read bus failed\n");
+		return EXIT_FAILURE;
+	}
+
+}
 
 int main(int argc, char *argv[] )
 {
 	int ret = 0;
 	char buf[1024];
+
+
+#if 0
+	if((ret = sys_init()) < 0)
+	{
+		printf("sys init failed, exit\n");
+		exit(1);
+	}
+
+	gps_on();
+	ux400_gps_sys_exit();
+	sleep(1);
+
+#endif
 
 	if((ret = ux400_gps_sys_init()) < 0)
 	{
@@ -168,7 +259,8 @@ int main(int argc, char *argv[] )
 		exit(1);
 	}
 
-	// Read data forever
+	printf("reading ...\n");
+	/* Read data forever */
 	while (1) {
 		ret = ux400_gps_read_data(buf, sizeof(buf));
 		if(ret > 0){
@@ -182,7 +274,6 @@ int main(int argc, char *argv[] )
 	printf("UX400 GPS exit...\n");
 
 	ux400_gps_sys_exit();
-
 }
 
 

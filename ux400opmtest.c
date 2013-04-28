@@ -113,7 +113,7 @@ static int ux400_opm_sys_init()
 		return EXIT_FAILURE;
 	}
 
-	ftdi_set_interface(&ux400_opm_ftdic, UX400_RS232_B);
+	ftdi_set_interface(&ux400_opm_ftdic, UX400_RS232_A);
 
 	if((ret = ftdi_usb_open_desc(&ux400_opm_ftdic, UX400VENDOR, UX400PRODUCT, UX400DES, UX400_RS232_SN)) < 0)
 	{

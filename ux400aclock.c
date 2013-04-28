@@ -173,10 +173,10 @@ int main(int argc, char *argv[] )
 		exit(1);
 	}
 
-	// Read data forever
+	/* Read data forever */
 	while ((ret = ux400_aclock_read_data(buf, sizeof(buf))) >= 0) {
 		if(ret > 0){
-//			fprintf(stderr, "read %d bytes\n", ret);
+			fprintf(stderr, "read %d bytes\n", ret);
 			fwrite(buf, ret, 1, stdout);
 			fflush(stderr);
 			fflush(stdout);

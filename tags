@@ -4,6 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ATOMIC_10M	ux400setclk.c	32;"	d	file:
+ATOMIC_1PPS	ux400setclk.c	33;"	d	file:
 AUTO_DETACH_SIO_MODULE	ftdi.h	/^    AUTO_DETACH_SIO_MODULE = 0,$/;"	e	enum:ftdi_module_detach_mode
 BACKLIGHT_OFFSET	ux400opm-new.c	29;"	d	file:
 BACKLIGHT_OFFSET	ux400opm.c	32;"	d	file:
@@ -37,6 +39,11 @@ CBUS_TXLED	ftdi.h	250;"	d
 CBUS_TXRXLED	ftdi.h	252;"	d
 CC	Makefile	/^CC=gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS = -Wall -O2$/;"	m
+CONT_REG1	ux400gps.c	28;"	d	file:
+CONT_REG1	ux400opm.c	36;"	d	file:
+CONT_REG1	ux400setclk.c	28;"	d	file:
+CONT_REG3	ux400setclk.c	29;"	d	file:
+CONT_REG5	ux400setclk.c	30;"	d	file:
 DEPRECATED	ftdi.h	159;"	d
 DEPRECATED	ftdi.h	161;"	d
 DEPRECATED	ftdi.h	164;"	d
@@ -50,7 +57,9 @@ FTDI_DEVICE_OUT_REQTYPE	ftdi.h	115;"	d
 FTDI_URB_USERCONTEXT_COOKIE	ftdi.h	156;"	d
 GET_BITS_HIGH	ftdi.h	83;"	d
 GET_BITS_LOW	ftdi.h	82;"	d
-GPS_BAUDRATE	ux400gps.c	27;"	d	file:
+GPS_1PPS	ux400setclk.c	34;"	d	file:
+GPS_BAUDRATE	ux400gps.c	26;"	d	file:
+GPS_ON	ux400gps.c	29;"	d	file:
 GetBinStartAddr	ux400vfl.c	/^static long GetBinStartAddr(unsigned char *pBuff, long len)$/;"	f	file:
 HIGH_CURRENT_DRIVE	ftdi.h	289;"	d
 INIT_CYCLE	ux400vfl.c	31;"	d	file:
@@ -86,6 +95,8 @@ MPSSE_WRITE_NEG	ftdi.h	67;"	d
 MPSSE_WRITE_TMS	ftdi.h	73;"	d
 NONE	ftdi.h	/^enum ftdi_parity_type { NONE=0, ODD=1, EVEN=2, MARK=3, SPACE=4 };$/;"	e	enum:ftdi_parity_type
 ODD	ftdi.h	/^enum ftdi_parity_type { NONE=0, ODD=1, EVEN=2, MARK=3, SPACE=4 };$/;"	e	enum:ftdi_parity_type
+OPMPW_ON	ux400opm.c	37;"	d	file:
+OPMPW_ON	ux400setclk.c	36;"	d	file:
 OPM_BAUDRATE	ux400opmtest.c	27;"	d	file:
 OPM_OFF	ux400opm-new.c	24;"	d	file:
 OPM_OFF	ux400opm.c	27;"	d	file:
@@ -98,13 +109,13 @@ POWERKEY_OFFSET	ux400vfl.c	47;"	d	file:
 READ_EXTENDED	ftdi.h	99;"	d
 READ_SHORT	ftdi.h	97;"	d
 REG1_OFFSET	ux400opm-new.c	33;"	d	file:
-REG1_OFFSET	ux400opm.c	36;"	d	file:
 REG1_OFFSET	ux400vfl.c	50;"	d	file:
 REG_CPLDVER	ux400opm-new.c	35;"	d	file:
-REG_CPLDVER	ux400opm.c	38;"	d	file:
+REG_CPLDVER	ux400opm.c	39;"	d	file:
+REG_CPLDVER	ux400setclk.c	37;"	d	file:
 REG_CPLDVER	ux400vfl.c	52;"	d	file:
 REG_GPIO_OFFSET	ux400opm-new.c	34;"	d	file:
-REG_GPIO_OFFSET	ux400opm.c	37;"	d	file:
+REG_GPIO_OFFSET	ux400opm.c	38;"	d	file:
 REG_GPIO_OFFSET	ux400vfl.c	51;"	d	file:
 Read_bus	ux400aclock.c	/^static int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f	file:
 Read_bus	ux400aclockcal.c	/^static int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f	file:
@@ -112,6 +123,7 @@ Read_bus	ux400gps.c	/^static int Read_bus(struct ftdi_context * handle, unsigned
 Read_bus	ux400opm-new.c	/^int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Read_bus	ux400opm.c	/^int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Read_bus	ux400opmtest.c	/^static int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f	file:
+Read_bus	ux400setclk.c	/^int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Read_bus	ux400vfl.c	/^int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 SEND_IMMEDIATE	ftdi.h	92;"	d
 SET_BITS_HIGH	ftdi.h	79;"	d
@@ -168,6 +180,7 @@ UX400DES	ux400gps.c	19;"	d	file:
 UX400DES	ux400opm-new.c	21;"	d	file:
 UX400DES	ux400opm.c	24;"	d	file:
 UX400DES	ux400opmtest.c	19;"	d	file:
+UX400DES	ux400setclk.c	24;"	d	file:
 UX400DES	ux400vfl.c	24;"	d	file:
 UX400PRODUCT	ux400aclock.c	18;"	d	file:
 UX400PRODUCT	ux400aclockcal.c	18;"	d	file:
@@ -175,6 +188,7 @@ UX400PRODUCT	ux400gps.c	18;"	d	file:
 UX400PRODUCT	ux400opm-new.c	20;"	d	file:
 UX400PRODUCT	ux400opm.c	23;"	d	file:
 UX400PRODUCT	ux400opmtest.c	18;"	d	file:
+UX400PRODUCT	ux400setclk.c	23;"	d	file:
 UX400PRODUCT	ux400vfl.c	23;"	d	file:
 UX400VENDOR	ux400aclock.c	17;"	d	file:
 UX400VENDOR	ux400aclockcal.c	17;"	d	file:
@@ -182,9 +196,12 @@ UX400VENDOR	ux400gps.c	17;"	d	file:
 UX400VENDOR	ux400opm-new.c	19;"	d	file:
 UX400VENDOR	ux400opm.c	22;"	d	file:
 UX400VENDOR	ux400opmtest.c	17;"	d	file:
+UX400VENDOR	ux400setclk.c	22;"	d	file:
 UX400VENDOR	ux400vfl.c	22;"	d	file:
+UX400_LOCAL_SN	ux400gps.c	20;"	d	file:
 UX400_LOCAL_SN	ux400opm-new.c	27;"	d	file:
 UX400_LOCAL_SN	ux400opm.c	30;"	d	file:
+UX400_LOCAL_SN	ux400setclk.c	26;"	d	file:
 UX400_LOCAL_SN	ux400vfl.c	44;"	d	file:
 UX400_RS232_A	ux400aclock.c	24;"	d	file:
 UX400_RS232_A	ux400aclockcal.c	24;"	d	file:
@@ -196,9 +213,11 @@ UX400_RS232_B	ux400gps.c	25;"	d	file:
 UX400_RS232_B	ux400opmtest.c	25;"	d	file:
 UX400_RS232_SN	ux400aclock.c	22;"	d	file:
 UX400_RS232_SN	ux400aclockcal.c	22;"	d	file:
-UX400_RS232_SN	ux400gps.c	22;"	d	file:
+UX400_RS232_SN	ux400gps.c	23;"	d	file:
 UX400_RS232_SN	ux400opmtest.c	22;"	d	file:
-UX400_SEM_CPLD	ux400opm.c	40;"	d	file:
+UX400_SEM_CPLD	ux400gps.c	21;"	d	file:
+UX400_SEM_CPLD	ux400opm.c	41;"	d	file:
+UX400_SEM_CPLD	ux400setclk.c	25;"	d	file:
 UX400_SEM_CPLD	ux400vfl.c	60;"	d	file:
 VEEX_KEY_BACKLIGHT	ux400vfl.c	54;"	d	file:
 VEEX_KEY_FILE	ux400vfl.c	57;"	d	file:
@@ -219,6 +238,7 @@ Write_bus	ux400gps.c	/^static int Write_bus(struct ftdi_context * handle, unsign
 Write_bus	ux400opm-new.c	/^int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Write_bus	ux400opm.c	/^int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Write_bus	ux400opmtest.c	/^static int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f	file:
+Write_bus	ux400setclk.c	/^int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 Write_bus	ux400vfl.c	/^int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)$/;"	f
 __libftdi_h__	ftdi.h	18;"	d
 aclock_BAUDRATE	ux400aclock.c	27;"	d	file:
@@ -233,8 +253,10 @@ buzzer	ux400vfl.c	/^int buzzer(int on)$/;"	f
 cbus_function	ftdi.h	/^    int cbus_function[5];$/;"	m	struct:ftdi_eeprom
 change_usb_version	ftdi.h	/^    int change_usb_version;$/;"	m	struct:ftdi_eeprom
 chip_type	ftdi.h	/^    int chip_type;$/;"	m	struct:ftdi_eeprom
+clock_select	ux400setclk.c	/^void clock_select(unsigned char reg, unsigned char bit, int clock)$/;"	f
 cpldver	ux400opm-new.c	/^char cpldver(void)$/;"	f
 cpldver	ux400opm.c	/^char cpldver(void)$/;"	f
+cpldver	ux400setclk.c	/^char cpldver(void)$/;"	f
 cpldver	ux400vfl.c	/^char cpldver(void)$/;"	f
 dev	ftdi.h	/^    struct usb_device *dev;$/;"	m	struct:ftdi_device_list	typeref:struct:ftdi_device_list::usb_device
 eeprom_size	ftdi.h	/^    int eeprom_size;$/;"	m	struct:ftdi_context
@@ -251,7 +273,10 @@ ftdi_module_detach_mode	ftdi.h	/^enum ftdi_module_detach_mode$/;"	g
 ftdi_mpsse_mode	ftdi.h	/^enum ftdi_mpsse_mode$/;"	g
 ftdi_parity_type	ftdi.h	/^enum ftdi_parity_type { NONE=0, ODD=1, EVEN=2, MARK=3, SPACE=4 };$/;"	g
 ftdi_stopbits_type	ftdi.h	/^enum ftdi_stopbits_type { STOP_BIT_1=0, STOP_BIT_15=1, STOP_BIT_2=2 };$/;"	g
+gpio_get	ux400setclk.c	/^int gpio_get(unsigned char gpio, unsigned char reg)$/;"	f
+gpio_set	ux400setclk.c	/^int gpio_set(unsigned char gpio, unsigned char reg)$/;"	f
 gpio_set	ux400vfl.c	/^int gpio_set(unsigned char gpio)$/;"	f
+gps_on	ux400gps.c	/^int gps_on()$/;"	f
 high_current	ftdi.h	/^    int high_current;$/;"	m	struct:ftdi_eeprom
 in_ep	ftdi.h	/^    int in_ep;$/;"	m	struct:ftdi_context
 in_is_isochronous	ftdi.h	/^    int in_is_isochronous;$/;"	m	struct:ftdi_eeprom
@@ -267,6 +292,7 @@ main	ux400gps.c	/^int main(int argc, char *argv[] )$/;"	f
 main	ux400opm-new.c	/^int main(int argc, char *argv[] )$/;"	f
 main	ux400opm.c	/^int main(int argc, char *argv[] )$/;"	f
 main	ux400opmtest.c	/^int main(int argc, char *argv[] )$/;"	f
+main	ux400setclk.c	/^int main(int argc, char *argv[] )$/;"	f
 main	ux400vfl.c	/^int main(int argc, char *argv[] )$/;"	f
 manufacturer	ftdi.h	/^    char *manufacturer;$/;"	m	struct:ftdi_eeprom
 max_packet_size	ftdi.h	/^    unsigned int max_packet_size;$/;"	m	struct:ftdi_context
@@ -275,6 +301,7 @@ module_detach_mode	ftdi.h	/^    enum ftdi_module_detach_mode module_detach_mode;
 next	ftdi.h	/^    struct ftdi_device_list *next;$/;"	m	struct:ftdi_device_list	typeref:struct:ftdi_device_list::ftdi_device_list
 opm_pwr	ux400opm-new.c	/^int opm_pwr(unsigned int on)$/;"	f
 opm_pwr	ux400opm.c	/^int opm_pwr(unsigned int on)$/;"	f
+opm_pwr	ux400setclk.c	/^int opm_pwr(unsigned int on)$/;"	f
 out_ep	ftdi.h	/^    int out_ep;      \/* 1 or 2 *\/$/;"	m	struct:ftdi_context
 out_is_isochronous	ftdi.h	/^    int out_is_isochronous;$/;"	m	struct:ftdi_eeprom
 powercut	ux400vfl.c	/^int powercut(void)$/;"	f
@@ -291,8 +318,10 @@ send_event	ux400vfl.c	/^int send_event(int fd, __u16 type, __u16 code, __s32 val
 serial	ftdi.h	/^    char *serial;$/;"	m	struct:ftdi_eeprom
 size	ftdi.h	/^    int size;$/;"	m	struct:ftdi_eeprom
 suspend_pull_downs	ftdi.h	/^    int suspend_pull_downs;$/;"	m	struct:ftdi_eeprom
+sys_init	ux400gps.c	/^int sys_init()$/;"	f
 sys_init	ux400opm-new.c	/^int sys_init()$/;"	f
 sys_init	ux400opm.c	/^int sys_init()$/;"	f
+sys_init	ux400setclk.c	/^int sys_init()$/;"	f
 sys_init	ux400vfl.c	/^int sys_init()$/;"	f
 type	ftdi.h	/^    enum ftdi_chip_type type;$/;"	m	struct:ftdi_context	typeref:enum:ftdi_context::ftdi_chip_type
 uinput_fd	ux400vfl.c	/^int uinput_fd;$/;"	v
@@ -314,6 +343,7 @@ ux400_aclock_write_data	ux400aclock.c	/^static int ux400_aclock_write_data(unsig
 ux400_aclock_write_data	ux400aclockcal.c	/^static int ux400_aclock_write_data(unsigned char * buf, int size)$/;"	f	file:
 ux400_ftdic	ux400opm-new.c	/^struct ftdi_context ux400_ftdic;$/;"	v	typeref:struct:ftdi_context
 ux400_ftdic	ux400opm.c	/^struct ftdi_context ux400_ftdic;$/;"	v	typeref:struct:ftdi_context
+ux400_ftdic	ux400setclk.c	/^struct ftdi_context ux400_ftdic;$/;"	v	typeref:struct:ftdi_context
 ux400_ftdic	ux400vfl.c	/^struct ftdi_context ux400_ftdic;$/;"	v	typeref:struct:ftdi_context
 ux400_gps_ftdic	ux400gps.c	/^struct ftdi_context ux400_gps_ftdic;$/;"	v	typeref:struct:ftdi_context
 ux400_gps_read_data	ux400gps.c	/^static int ux400_gps_read_data(unsigned char * buf, int size)$/;"	f	file:
