@@ -25,16 +25,14 @@
 #define	UX400_SEM_CPLD	"UX400_SEM_CPLD"
 #define	UX400_LOCAL_SN		"USBLOCALBUS01"
 
-#define	CONT_REG1		0x00
-#define	CONT_REG3		0x02
-#define CONT_REG5	       0x04
-
-#define ATOMIC_10M  1
-#define ATOMIC_1PPS 2
-#define GPS_1PPS    3
-
-#define OPMPW_ON		5
 #define	REG_CPLDVER		0x15
+
+/*#define __DEBUG__*/
+#ifdef  __DEBUG__  
+#define DEBUG(format,...) printf("File: "__FILE__", Line: %05d: "format"\n", __LINE__, ##__VA_ARGS__)  
+#else 
+#define DEBUG(format,...) 
+#endif  
 
 struct ftdi_context ux400_ftdic;
 
@@ -43,6 +41,23 @@ int Write_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char l
 
 int sys_init();
 
+enum CPLD_REGS
+{
+	CONT_REG1 = 0,
+	CONT_REG2,
+	CONT_REG3,
+	CONT_REG4,
+	CONT_REG5,
+	STATUS_REG1 = 8,
+	STATUS_REG2
+};
+
+enum CLOCK_SOURCE
+{
+	ATOMIC_10M = 1,
+	ATOMIC_1PPS,
+	GPS_1PPS
+};
 
 char cpldver(void)
 {
@@ -54,48 +69,11 @@ char cpldver(void)
 		printf("Read CPLD version failed.\n");
 		return -1;
 	}else{
-		/*printf("CPLD VERSION: 0x%x\n", data);*/
+		DEBUG("CPLD VERSION: 0x%x", data);
 	}
 
 	return data;
 }
-
-
-int opm_pwr(unsigned int on)
-{
-
-	unsigned char data, temp;
-	int ret;
-
-	if((ret = Read_bus(&ux400_ftdic, 0x00, CONT_REG1, &data, 1)) < 0)
-	{
-		printf("Read OPM reg failed!\n");
-		return -1;
-	}
-	/*printf("old data = 0x%x\n", data);*/
-	if(on == 1){
-		data |= 0x01<<OPMPW_ON;
-	}else{
-		data &= ~(0x01<<OPMPW_ON);
-	}
-
-	if((ret = Write_bus(&ux400_ftdic, 0x00, CONT_REG1, &data, 1)) < 0)
-	{
-		printf("Write OPM reg failed!\n");
-		return -1;
-	}
-
-	if((ret = Read_bus(&ux400_ftdic, 0x00, CONT_REG1, &data, 1)) < 0)
-	{
-		printf("Read OPM reg failed!\n");
-		return -1;
-	}
-	/*printf("new data = 0x%x\n", data);*/
-	
-	return 0;
-}
-
-
 
 int Read_bus(struct ftdi_context * handle, unsigned char haddr, unsigned char laddr, unsigned char * buff, unsigned int len)
 {
@@ -241,11 +219,12 @@ int clock_select(unsigned char reg, unsigned char bit, int clock)
 	unsigned char temp = 0;
 	int ret;
 
+	DEBUG("reg = 0x%x, bit = 0x%x, clock = 0x%x", reg, bit, clock);
 	if((ret = gpio_get(&temp, reg))<0){
 		printf("Read gpio failed, exit\n");
 		return -1;
 	}
-	/*printf("old temp = 0x%x\n", temp);*/
+	DEBUG("old temp = 0x%x", temp);
 
 	switch (clock) {
 		case ATOMIC_10M:
@@ -263,7 +242,7 @@ int clock_select(unsigned char reg, unsigned char bit, int clock)
 		printf("Undefined clock, please select correct clock!\n");
 		return -1;
 	}
-	/*printf("calculate temp = 0x%x\n", temp);*/
+	DEBUG("calculate temp = 0x%x", temp);
 
 	if((ret = gpio_set(temp, reg))<0){
 		printf("Read gpio failed, exit\n");
@@ -274,7 +253,7 @@ int clock_select(unsigned char reg, unsigned char bit, int clock)
 		printf("Read gpio failed, exit\n");
 		return -1;
 	}
-	/*printf("new read temp = 0x%x\n", temp);*/
+	DEBUG("new read temp = 0x%x", temp);
 
 }
 
@@ -307,7 +286,18 @@ int main(int argc, char *argv[] )
 		exit(1);
 	}
 
-	/*printf("argv[1] = %s\n", argv[1]);*/
+	DEBUG("CONT_REG1 = %d", CONT_REG1);
+	DEBUG("CONT_REG2 = %d", CONT_REG2);
+	DEBUG("CONT_REG3 = %d", CONT_REG3);
+	DEBUG("CONT_REG4 = %d", CONT_REG4);
+	DEBUG("CONT_REG5 = %d", CONT_REG5);
+	DEBUG("STATUS_REG1 = %d", STATUS_REG1);
+	DEBUG("STATUS_REG2 = %d", STATUS_REG2);
+	DEBUG("ATOMIC_10M  = %d", ATOMIC_10M);
+	DEBUG("ATOMIC_1PPS = %d", ATOMIC_1PPS);
+	DEBUG("GPS_1PPS = %d", GPS_1PPS);
+
+	DEBUG("argv[1] = %s", argv[1]);
 
 	if (strcmp(argv[1], "LA") == 0) {	 /*1g-ge*/
 		reg = CONT_REG5;
@@ -333,7 +323,7 @@ int main(int argc, char *argv[] )
 	}
 
 	clock = atoi(argv[2]);
-	/*printf("clock = 0x%x\n", clock);*/
+	DEBUG("clock = 0x%x", clock);
 
 	sem_id = sem_open(UX400_SEM_CPLD, O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH, 1);
 	if(sem_id == SEM_FAILED) {
